@@ -1,13 +1,15 @@
-from engine.database import BBDD
-from engine.search import SearchEngine
-from ui.app import MoogleApp
+from index import DocumentIndexer
+from search import SearchEngine
+from app import MoogleApp
 import tkinter as tk
 
-if __name__ == "__main__":
-    db_path = "./Content" 
-    db = BBDD(db_path, delimitors=".,:;¿?¡()[]{}<>@#$%&_+-/ \\n")
-    search_engine = SearchEngine(db)
+def main():
+    indexer = DocumentIndexer()
+    indexer.cargar_stop_words("C:\Pro\Moogle in Py\stop_words.txt")
+    indexer.cargar_documentos("C:\Pro\Moogle in Py\Edgar allan poe")  
+    if not indexer.documentos:  
+        print("No se encontraron documentos válidos en la ruta especificada.")
+        return
 
-    root = tk.Tk()
-    app = MoogleApp(root, search_engine)
-    root.mainloop()
+if __name__ == "__main__":
+    main()

@@ -24,3 +24,11 @@ class DocumentIndexer:
         texto = re.sub(r'[\W_]+', ' ', texto.lower()) 
         palabras = texto.split()
         return [palabra for palabra in palabras if palabra not in self.stop_words]
+
+    def cargar_documentos(self, ruta_carpeta):
+        for archivo in os.listdir(ruta_carpeta):
+            if archivo.endswith(".txt"):  
+                ruta_txt = os.path.join(ruta_carpeta, archivo)
+                with open(ruta_txt, 'r', encoding='utf-8') as file:  
+                    texto = file.read()
+                    self.documentos[archivo] = texto
