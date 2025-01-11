@@ -10,6 +10,14 @@ def main():
     if not indexer.documentos:  
         print("No se encontraron documentos válidos en la ruta especificada.")
         return
+    
+    indexer.calcular_umbral()  
+    indexer.construir_indices()  
 
+    engine = SearchEngine(indexer)
+
+    root = tk.Tk()
+    app = MoogleApp(root, engine)
+    root.mainloop()
 if __name__ == "__main__":
     main()
