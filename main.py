@@ -5,8 +5,8 @@ import tkinter as tk
 
 def main():
     indexer = DocumentIndexer()
-    indexer.cargar_stop_words("C:\Pro\Moogle in Py\stop_words.txt")
-    indexer.cargar_documentos("C:\Pro\Moogle in Py\Edgar allan poe")  
+    indexer.cargar_stop_words("Documentos:\GitHub\Proyecto-Programacion\stop_words.txt")
+    indexer.cargar_documentos("Documentos:\GitHub\Proyecto-Programacion\Edgar allan poe")  
     if not indexer.documentos:  
         print("No se encontraron documentos válidos en la ruta especificada.")
         return
