@@ -4,9 +4,9 @@ from collections import defaultdict
 class SearchEngine:
     def __init__(self, indexer):
         self.indexer = indexer
-    
+
     def obtener_snippet(self, documento, palabras_query):
-        """Encuentra el fragmento más relevante del documento para las palabras de la consulta."""
+        """Encuentra el fragmento más relevante del documento para las palabras de la consulta y sugerencias."""
         texto = self.indexer.documentos[documento]
         palabras_documento = texto.split()
 
@@ -18,7 +18,7 @@ class SearchEngine:
         palabras_posiciones = [i for i, palabra in enumerate(palabras_documento) if palabra in palabras_query]
 
         if not palabras_posiciones:
-            return texto[:200] 
+            return texto[:200]  
 
         for i in palabras_posiciones:
             inicio = max(0, i - ventana_tamano // 2)
@@ -41,7 +41,9 @@ class SearchEngine:
                 snippet = texto[punto_inicio:punto_fin + 1]
 
         return snippet
-    
+
+
+
     def query(self, query):
         palabras_query = self.indexer.limpiar_texto(query)  
         scores = defaultdict(float)
@@ -65,9 +67,12 @@ class SearchEngine:
                         scores[doc] += tfidf
 
         resultados = sorted(scores.items(), key=lambda x: -x[1])
-        
+
+        palabras_query.extend(sugerencias.values())
+
         resultados_con_snippets = [
             (doc, score, self.obtener_snippet(doc, palabras_query)) for doc, score in resultados
         ]
 
         return resultados_con_snippets, sugerencias
+
