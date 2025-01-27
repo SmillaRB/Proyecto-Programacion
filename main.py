@@ -5,14 +5,15 @@ import tkinter as tk
 
 def main():
     indexer = DocumentIndexer()
-    indexer.cargar_stop_words("Documentos:\GitHub\Proyecto-Programacion\stop_words.txt")
-    indexer.cargar_documentos("Documentos:\GitHub\Proyecto-Programacion\Edgar allan poe")  
+    indexer.load_stop_words("stop_words.txt")
+    indexer.load_doc("Edgar allan poe")
+
     if not indexer.documentos:  
         print("No se encontraron documentos válidos en la ruta especificada.")
         return
     
     indexer.calcular_umbral()  
-    indexer.construir_indices()  
+    indexer.build_index()  
 
     engine = SearchEngine(indexer)
 

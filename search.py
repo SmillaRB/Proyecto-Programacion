@@ -5,7 +5,7 @@ class SearchEngine:
     def __init__(self, indexer):
         self.indexer = indexer
 
-    def obtener_snippet(self, documento, palabras_query):
+    def obtain_snippet(self, documento, palabras_query):
         """Encuentra el fragmento más relevante del documento para las palabras de la consulta y sugerencias."""
         texto = self.indexer.documentos[documento]
         palabras_documento = texto.split()
@@ -45,7 +45,7 @@ class SearchEngine:
 
 
     def query(self, query):
-        palabras_query = self.indexer.limpiar_texto(query)  
+        palabras_query = self.indexer.clean_text(query)  
         scores = defaultdict(float)
         sugerencias = {}
 
@@ -71,7 +71,7 @@ class SearchEngine:
         palabras_query.extend(sugerencias.values())
 
         resultados_con_snippets = [
-            (doc, score, self.obtener_snippet(doc, palabras_query)) for doc, score in resultados
+            (doc, score, self.obtain_snippet(doc, palabras_query)) for doc, score in resultados
         ]
 
         return resultados_con_snippets, sugerencias

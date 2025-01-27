@@ -11,18 +11,18 @@ class DocumentIndexer:
         self.threshold = None
         self.stop_words = set() 
 
-    def cargar_stop_words(self, ruta_archivo):
+    def load_stop_words(self, path_doc):
         """Carga las palabras no deseadas desde un archivo."""
         try:
-            with open(ruta_archivo, 'r', encoding='utf-8') as file:
+            with open(path_doc, 'r', encoding='utf-8') as file:
                 self.stop_words = set(file.read().splitlines())
         except Exception as e:
             print(f"Error cargando las stop words: {e}")
 
-    def limpiar_texto(self, texto):
+    def clean_text(self, text):
         """Elimina puntuaciones, pasa a minúsculas y excluye palabras no deseadas."""
-        texto = re.sub(r'[\W_]+', ' ', texto.lower()) 
-        palabras = texto.split()
+        text = re.sub(r'[\W_]+', ' ', text.lower()) 
+        palabras = text.split()
         return [palabra for palabra in palabras if palabra not in self.stop_words]
    
     def calcular_umbral(self):
@@ -38,7 +38,7 @@ class DocumentIndexer:
         else:
             self.threshold = float('inf') 
 
-    def cargar_documentos(self, ruta_carpeta):
+    def load_doc(self, ruta_carpeta):
         for archivo in os.listdir(ruta_carpeta):
             if archivo.endswith(".txt"):  
                 ruta_txt = os.path.join(ruta_carpeta, archivo)
@@ -46,10 +46,10 @@ class DocumentIndexer:
                     texto = file.read()
                     self.documentos[archivo] = texto
 
-    def construir_indices(self):
+    def build_index(self):
         total_documentos = len(self.documentos)
         for doc, texto in self.documentos.items():
-            palabras = self.limpiar_texto(texto)
+            palabras = self.clean_text(texto)
             total_palabras = len(palabras)
             frecuencias = defaultdict(int)
 
