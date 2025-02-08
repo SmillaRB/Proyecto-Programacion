@@ -18,7 +18,7 @@ class SearchEngine:
         palabras_posiciones = [i for i, palabra in enumerate(palabras_documento) if palabra in palabras_query]
 
         if not palabras_posiciones:
-            return texto[:200]  
+            return texto[:200]  #TODO: 
 
         for i in palabras_posiciones:
             inicio = max(0, i - ventana_tamano // 2)

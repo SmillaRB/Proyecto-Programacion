@@ -25,19 +25,6 @@ class DocumentIndexer:
         palabras = text.split()
         return [palabra for palabra in palabras if palabra not in self.stop_words]
    
-    def calcular_umbral(self):
-        """Calcula el umbral dinámico basado en la frecuencia de las palabras en todo el corpus."""
-        palabra_frecuencia = defaultdict(int)
-        for palabras in self.Larousse.values():
-            for doc, freq in palabras.items():
-                palabra_frecuencia[doc] += freq
-
-        total_frecuencias = sum(palabra_frecuencia.values())
-        if len(palabra_frecuencia) > 0: 
-            self.threshold = total_frecuencias / len(palabra_frecuencia)
-        else:
-            self.threshold = float('inf') 
-
     def load_doc(self, ruta_carpeta):
         for archivo in os.listdir(ruta_carpeta):
             if archivo.endswith(".txt"):  
@@ -60,5 +47,4 @@ class DocumentIndexer:
                 self.Larousse[palabra][doc] = frecuencia
 
             for palabra, frecuencia in frecuencias.items():
-                if frecuencia <= self.threshold:  # Excluir palabras muy comunes
                     self.TF_IDF[palabra][doc] = (frecuencia / total_palabras) * math.log10(total_documentos / len(self.Larousse[palabra]))

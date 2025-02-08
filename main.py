@@ -12,7 +12,6 @@ def main():
         print("No se encontraron documentos válidos en la ruta especificada.")
         return
     
-    indexer.calcular_umbral()  
     indexer.build_index()  
 
     engine = SearchEngine(indexer)
